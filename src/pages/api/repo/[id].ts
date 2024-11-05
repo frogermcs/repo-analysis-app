@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'GET') {
     try {
-      const repo = await prisma.prompts.findUnique({
+      const repo = await prisma.repository.findUnique({
         where: { id: String(id) },
       });
 
