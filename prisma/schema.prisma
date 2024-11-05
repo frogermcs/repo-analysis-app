@@ -19,3 +19,9 @@ model Repository {
   text      String
   createdAt DateTime @default(now())
 }
+
+model Prompt {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+}
