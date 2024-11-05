@@ -37,9 +37,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 # My Readme
 
+## URLs schemas
+- `/` - Home page (not used at the moment)
+- `/repo/[id]` - Repo page
+- `/api/repo-upload` - Push your repo code here
+- `/api/repo/[id]` - Fetch repo data
+
+## Prisma DB management
+
 The app uses Prisma for DB management. 
 Standard configuration:
 - Env variables stored in local .env file
 - Prisma schema in `prisma/schema.prisma`
 - To update the schema, run `npx prisma generate`
 - To update remote DB, run `npx prisma db push`
+- To run Prisma Studio, run `npx prisma studio`
+
