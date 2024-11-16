@@ -1,0 +1,29 @@
+name: Generate Project Dump for LLM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Install Codebase Dump
+        run: pip install codebase-dump
+
+      - name: Generate Single-File Prompt for LLM
+        run: codebase-dump . -f project_dump_for_llm.md -o markdown 
+
+      - name: Upload Prompt File as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: project_dump_for_llm.md
+          path: project_dump_for_llm.md

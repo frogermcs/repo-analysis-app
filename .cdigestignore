@@ -1,0 +1,5 @@
+# This is .gitignore like file to ignore files and directories from being parsed by codebase-dump tool
+# Read more on: https://github.com/frogermcs/codebase-dump
+
+public/
+package-lock.json
