@@ -1,13 +1,14 @@
-import { useRouter } from 'next/router';
+'use client'
+
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation'
 import useSWR from 'swr';
 import axios from 'axios';
 
 export default function Repo() {
-  const router = useRouter();
-  const { id } = router.query;
   const [text, setText] = useState('');
-
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(id ? `/api/repo/${id}` : null, fetcher);
 
@@ -16,7 +17,7 @@ export default function Repo() {
       setText(data.text);
     } else if (error) {
       setText('Error fetching repository: ' + error.message);
-    }
+    } 
   }, [data, error]);
 
   return (
