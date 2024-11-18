@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'
 import useSWR from 'swr';
 import axios from 'axios';
+import Markdown from 'react-markdown'
 
 export default function Repo() {
   const [text, setText] = useState('');
@@ -20,9 +21,5 @@ export default function Repo() {
     } 
   }, [data, error]);
 
-  return (
-      <div>
-      <h1>{text}</h1>
-      </div>
-  );
+  return <div><Markdown>{text}</Markdown></div>
 }

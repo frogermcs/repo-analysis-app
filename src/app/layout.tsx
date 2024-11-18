@@ -15,14 +15,17 @@ export default function RootLayout({
 }>) {
   return (
     <html>
+      <head>
+        
+      </head>
       <body>
       <SidebarProvider>
         <AppSidebar />
-        <main>
+        
           <SidebarTrigger />
           {children}
-        </main>
-    </SidebarProvider>
+        
+      </SidebarProvider>
     </body>
   </html>
   );

@@ -40,8 +40,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## URLs schemas
 - `/` - Home page (not used at the moment)
 - `/repo/[id]` - Repo page
-- `/api/repo-upload` - Push your repo code here
+- `/api/repo/add` - Push your repo code here
 - `/api/repo/[id]` - Fetch repo data
+- `/api/prompt/add` - Push your prompt here
+- `/api/prompt/[id]` - Fetch prompt data
 
 ## Prisma DB management
 

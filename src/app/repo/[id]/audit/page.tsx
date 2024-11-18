@@ -9,7 +9,7 @@ export default function RepoAnalysis() {
     const [text, setText] = useState('');
 
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-    const { data, error } = useSWR(`/api/analysis-example`, fetcher);
+    const { data, error } = useSWR(`/api/example-analysis`, fetcher);
 
     useEffect(() => {
         if (data) {
