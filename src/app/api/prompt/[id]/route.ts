@@ -1,21 +1,20 @@
-import { prisma } from '../../../../lib/prisma';
+import { PromptService } from '@/services/prompt.service';
 import { NextResponse, NextRequest } from 'next/server'
+
+const promptService = new PromptService()
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = (await params).id;
   try {
-    const repo = await prisma.prompt.findUnique({
-      where: { id: String(id) },
-    });
-
-    if (!repo) {
-      return NextResponse.json({ error: 'Repository not found.' }, { status: 404 });
+    const id = (await params).id;
+    const prompt = await promptService.getPrompt(id)
+    if (!prompt) {
+      return NextResponse.json({ error: 'Prompt not found.' }, { status: 404 });
     }
 
-    return NextResponse.json({ text: repo.text });
+    return NextResponse.json({ text: prompt.text });
   } catch (error) {
     console.error('Database retrieval error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

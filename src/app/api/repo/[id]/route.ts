@@ -1,15 +1,16 @@
-import { prisma } from '../../../../lib/prisma';
+import { RepositoryService } from '@/services/repository.service';
 import { NextResponse, NextRequest } from 'next/server'
+
+const repositoryService = new RepositoryService()
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = (await params).id;
+  
   try {
-    const repo = await prisma.repository.findUnique({
-      where: { id: String(id) },
-    });
+    const id = (await params).id;
+    const repo = await repositoryService.getRepository(id)
 
     if (!repo) {
       return NextResponse.json({ error: 'Repository not found.' }, { status: 404 });
