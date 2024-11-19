@@ -16,12 +16,33 @@ datasource db {
 
 model Repository {
   id        String   @id @default(uuid())
-  text      String
+  text      String   
   createdAt DateTime @default(now())
+  audits    Audit[]
 }
 
 model Prompt {
-  id        String   @id @default(uuid())
+  id        String            @id @default(uuid())
   text      String
-  createdAt DateTime @default(now())
+  title     String            @default("not-set")
+  audits    PromptsOnAudits[]
+  createdAt DateTime          @default(now())
+}
+
+model PromptsOnAudits {
+  prompt        Prompt      @relation(fields: [promptId], references: [id])
+  promptId      String
+  audit         Audit       @relation(fields: [auditId], references: [id])
+  auditId       String
+  @@id([promptId, auditId])
+}
+
+model Audit {
+  id            String            @id @default(uuid())
+  repository    Repository        @relation(fields: [repositoryId], references: [id])
+  repositoryId  String
+  prompt        PromptsOnAudits[] 
+  promptId      String
+  text          String 
+  createdAt     DateTime          @default(now())
 }

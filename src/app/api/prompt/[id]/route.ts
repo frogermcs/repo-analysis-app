@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Prompt not found.' }, { status: 404 });
     }
 
-    return NextResponse.json({ text: prompt.text });
+    return NextResponse.json({ prompt: prompt });
   } catch (error) {
     console.error('Database retrieval error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
