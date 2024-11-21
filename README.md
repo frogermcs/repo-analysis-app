@@ -42,6 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - `/repo/[id]` - Repo page
 - `/api/repo/add` - Push your repo code here
 - `/api/repo/[id]` - Fetch repo data
+- `/api/repo/[id]/audit` - Fetch audit for the repo
 - `/api/prompt/add` - Push your prompt here
 - `/api/prompt/[id]` - Fetch prompt data
 
