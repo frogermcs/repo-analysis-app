@@ -8,10 +8,10 @@ import Markdown from 'react-markdown'
 
 export default function Repo() {
   const [text, setText] = useState('');
-  const params = useParams<{ id: string }>();
-  const id = params?.id;
+  const params = useParams<{ repoId: string }>();
+  const repoId = params?.repoId;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(id ? `/api/repo/${id}` : null, fetcher);
+  const { data, error } = useSWR(repoId ? `/api/repo/${repoId}` : null, fetcher);
 
   useEffect(() => {
     if (data) {

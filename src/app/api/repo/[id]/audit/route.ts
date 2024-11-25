@@ -37,7 +37,7 @@ export async function GET(
     ]
     
     const llmResponse = await llmService.generateAudit(llmInput)
-    const auditId = await auditService.createAudit(llmResponse, repo, prompt)
+    const auditId = await auditService.createAudit(llmResponse, repo.id, prompt.id)
     const newAudit = await auditService.getAudit(auditId)
     return NextResponse.json({ audit: newAudit });
   } catch (error) {

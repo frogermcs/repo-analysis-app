@@ -12,10 +12,10 @@ import { useParams } from 'next/navigation';
 
 export default function RepoAnalysis() {
   const [text, setText] = useState('');
-  const params = useParams<{ id: string }>();
-  const id = params?.id;
+  const params = useParams<{ repoId: string }>();
+  const repoId = params?.repoId;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(id ? `/api/repo/${id}/audit` : null, fetcher);
+  const { data, error } = useSWR(repoId ? `/api/repo/${repoId}/audit` : null, fetcher);
 
   useEffect(() => {
     if (data) {

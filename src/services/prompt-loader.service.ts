@@ -28,4 +28,8 @@ export class PromptLoader {
     return (await this.loadPrompts())
       .find((prompt) => prompt.filename === filename);
   }
+
+  async getPromptByFilenameId(filename: string): Promise<Prompt | undefined> {
+    return this.getPromptByFilename(filename + ".md");
+  }
 }

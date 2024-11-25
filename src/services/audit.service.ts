@@ -1,4 +1,4 @@
-import { PrismaClient, Prompt, Repository, Audit } from '@prisma/client';
+import { PrismaClient, Audit } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -8,12 +8,12 @@ export class AuditService {
 
   }
 
-  async createAudit(auditText: string, repository: Repository, prompt: Prompt): Promise<string> {  // Return ID
+  async createAudit(auditText: string, repositoryId: string, promptId: string): Promise<string> {  // Return ID
     const audit = await prisma.audit.create({
         data: {
             text: auditText,
-            repositoryId: repository.id,
-            promptId: prompt.id
+            repositoryId: repositoryId,
+            promptId: promptId
         }}
     )
     
