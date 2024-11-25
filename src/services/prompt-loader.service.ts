@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 
 interface Prompt {
+  id: string;
   filename: string;
   text: string;
 }
@@ -11,7 +12,8 @@ export class PromptLoader {
         const files: string[] = await fs.readdir(process.cwd() + '/src/assets/prompts/', 'utf-8');
         const prompts = await Promise.all(files.map(async (filename) => {
           const file = await fs.readFile(process.cwd() + '/src/assets/prompts/' + filename, 'utf8');
-          const prompt: Prompt = {filename: filename, text: file};
+          const id = filename.split('.')[0];
+          const prompt: Prompt = {id: id, filename: filename, text: file};
           return prompt;
         }));
 
