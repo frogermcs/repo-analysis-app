@@ -6,7 +6,7 @@ interface Audit {
     text: string;
   }
 
-export function useAudit (repoId: string, auditId: string): { audit: Audit | null, isLoading: boolean, isError: any } {
+export function useAudit (repoId: string, auditId: string): { audit: Audit | null, isLoading: boolean, isError: Error } {
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);
     const { data, error, isLoading } = useSWR(`/api/repo/${repoId}/audit/${auditId}`, fetcher);
 
