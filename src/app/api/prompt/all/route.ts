@@ -8,7 +8,7 @@ export async function GET() {
     const prompts = await promptLoader.getAllPrompts()
     
     if (!prompts) {
-      return NextResponse.json({ error: 'Prompt not found.' }, { status: 404 });
+      return NextResponse.json({ error: 'No prompts were found.' }, { status: 404 });
     }
 
     return NextResponse.json({ prompts: prompts });
