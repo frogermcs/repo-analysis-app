@@ -21,7 +21,7 @@ export async function GET(
     const prompt = await promptLoader.getPromptByFilenameId(promptId)
 
     if (!prompt || !repo) {
-      throw new Error("Prompt or Repository not found");
+      return NextResponse.json({ error: 'Prompt or Repository not found' }, { status: 404 });
   }
 
     const existingAudit = await auditService.getAuditForRepoAndPrompt(repoId, promptId)
