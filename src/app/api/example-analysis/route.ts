@@ -27,7 +27,7 @@ export async function GET() {
         throw new Error("Prompt or Repository not found");
     }
     const llmResponse = await llmService.generateAudit([prompt.text, architecturePrompt, repo.text])
-    const auditId = await auditService.createAudit(llmResponse, repo, prompt)
+    const auditId = await auditService.createAudit(llmResponse, repo.id, prompt.id)
     const newAudit = await auditService.getAudit(auditId)
     return NextResponse.json({ audit: newAudit });
   } catch (error) {

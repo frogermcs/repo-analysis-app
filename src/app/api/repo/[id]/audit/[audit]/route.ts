@@ -1,24 +1,24 @@
 import { AuditService } from '@/services/audit.service';
 import { LLMService } from '@/services/llm.service';
-import { PromptService } from '@/services/prompt.service';
+import { PromptLoader } from '@/services/prompt-loader.service';
 import { RepositoryService } from '@/services/repository.service';
 import { NextResponse, NextRequest } from 'next/server'
 
 const repositoryService = new RepositoryService()
 const auditService = new AuditService()
-const promptSerivce = new PromptService()
 const llmService = new LLMService()
+const promptLoader = new PromptLoader()
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string, audit: string }> }
 ) {
   try {
     const repoId = (await params).id;
-    const promptId = "a093e184-5819-4887-b25d-6bfa00de5c86"
+    const promptId = (await params).audit;
 
     const repo = await repositoryService.getRepository(repoId)
-    const prompt = await promptSerivce.getPrompt(promptId)
+    const prompt = await promptLoader.getPromptByFilenameId(promptId)
 
     if (!prompt || !repo) {
       throw new Error("Prompt or Repository not found");
@@ -29,10 +29,8 @@ export async function GET(
       return NextResponse.json({ audit: existingAudit });
     }
     
-    const architecturePrompt = "I want suggestions for layered architecture";
     const llmInput = [
       prompt.text, 
-      architecturePrompt, 
       repo.text
     ]
     
