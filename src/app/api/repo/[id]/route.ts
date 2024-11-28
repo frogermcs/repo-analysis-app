@@ -16,7 +16,7 @@ export async function GET(
       return NextResponse.json({ error: 'Repository not found.' }, { status: 404 });
     }
 
-    return NextResponse.json({ text: repo.text });
+    return NextResponse.json({ repository: repo });
   } catch (error) {
     console.error('Database retrieval error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

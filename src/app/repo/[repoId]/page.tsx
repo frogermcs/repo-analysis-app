@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'
-import useSWR from 'swr';
-import axios from 'axios';
 import Markdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import { SidebarInset } from "@/components/ui/sidebar"
+import { useRepository } from '@/api-client/repo-api.service';
 
 export default function Repo() {
   const [text, setText] = useState('');
@@ -19,7 +20,7 @@ export default function Repo() {
       setText('Loading repository...');
     } else if (isError) {
       setText('Error fetching repository: ' + isError.message);
-    }
+    } 
   }, [repository, isLoading, isError]);
 
 
