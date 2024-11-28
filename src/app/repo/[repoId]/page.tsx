@@ -10,16 +10,32 @@ export default function Repo() {
   const [text, setText] = useState('');
   const params = useParams<{ repoId: string }>();
   const repoId = params?.repoId;
-  const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(repoId ? `/api/repo/${repoId}` : null, fetcher);
+  const { repository, isLoading, isError } = useRepository(repoId);
 
   useEffect(() => {
-    if (data) {
-      setText(data.text);
-    } else if (error) {
-      setText('Error fetching repository: ' + error.message);
-    } 
-  }, [data, error]);
+    if (repository) {
+      setText(repository.text);
+    } else if (isLoading) {
+      setText('Loading repository...');
+    } else if (isError) {
+      setText('Error fetching repository: ' + isError.message);
+    }
+  }, [repository, isLoading, isError]);
 
-  return <div><Markdown>{text}</Markdown></div>
+
+  return <SidebarInset>
+    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <h1 className="text-lg font-bold">Code Audit - Your Input</h1>
+    </header>
+    <div className="flex flex-1 flex-col gap-4 p-4">
+      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+        <div className="flex max-w-full">
+          <Markdown
+            className="w-full max-w-3xl p-6 overflow-auto"
+            rehypePlugins={[rehypeHighlight]}>{text}</Markdown>
+        </div>
+      </div>
+    </div>
+  </SidebarInset>
+
 }
