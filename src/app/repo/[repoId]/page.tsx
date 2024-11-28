@@ -11,7 +11,7 @@ export default function Repo() {
   const [text, setText] = useState('');
   const params = useParams<{ repoId: string }>();
   const repoId = params?.repoId;
-  const {repository, isLoading, isError} = useRepository(repoId);
+  const { repository, isLoading, isError } = useRepository(repoId);
 
   useEffect(() => {
     if (repository) {
@@ -30,8 +30,10 @@ export default function Repo() {
     </header>
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-        <div className="flex flex-col space-y-1.5 p-6 prose max-w-full text-wrap">
-          <Markdown rehypePlugins={[rehypeHighlight]}>{text}</Markdown>
+        <div className="flex max-w-full">
+          <Markdown
+            className="w-full max-w-3xl p-6 overflow-auto"
+            rehypePlugins={[rehypeHighlight]}>{text}</Markdown>
         </div>
       </div>
     </div>
