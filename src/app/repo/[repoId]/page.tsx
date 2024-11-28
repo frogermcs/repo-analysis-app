@@ -32,7 +32,7 @@ export default function Repo() {
       <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
         <div className="flex max-w-full">
           <Markdown
-            className="w-full max-w-3xl p-6 overflow-auto"
+            className="w-full max-w-3xl p-6 overflow-auto prose"
             rehypePlugins={[rehypeHighlight]}>{text}</Markdown>
         </div>
       </div>
