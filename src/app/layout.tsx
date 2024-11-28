@@ -20,7 +20,7 @@ export default function RootLayout({
       </head>
       <body>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar repositoryId="ae5ea965-db92-453e-8711-338bdb65744b" />
         
           <SidebarTrigger />
           {children}

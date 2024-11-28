@@ -1,68 +1,65 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+'use client'
 
+import { useAllPrompts } from "@/api-client/prompt-api.service"
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from 'next/link'
+import { Spinner } from '@/components/ui/spinner';
 
-// Menu items.
-const items = [
-    {
-      title: "Home",
-      url: "/repo/example-analysis",
-      icon: Home,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-    },
-  ]
+export function AppSidebar({ repositoryId }: { repositoryId: string }) {
+  const { prompts, isLoading, isError } = useAllPrompts()
+  const menuItems = prompts?.map((prompt) => ({
+    title: prompt.id,
+    url: `/repo/${repositoryId}/audit/${prompt.id}`,
+  })) || []
 
-  export function AppSidebar() {
-    return (
-      <Sidebar>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
-            <SidebarGroupContent>
+  return (
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Your repository</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem key="repo">
+                <SidebarMenuButton asChild>
+                  <Link href={`/repo/${repositoryId}`}>
+                    <span>Repo input</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Repository audit</SidebarGroupLabel>
+          <SidebarGroupContent>
+            {isLoading && <Spinner size="small" show={true}>Loading...</Spinner>}
+            {isError && <div>Error loading prompts</div>}
+            {!isLoading && !isError && (
               <SidebarMenu>
-                {items.map((item) => (
+                {menuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <Link href={item.url}>
-                        <item.icon />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    )
-  }
+            )}
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
